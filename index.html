@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIT Manipur Navigator | Dijkstra Shortest Path Campus Navigation</title>
+    <meta name="description" content="Smart Campus Navigation System for NIT Manipur using Dijkstra's Algorithm. Find shortest walking paths between campus locations.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div id="app" class="app-container">
+        
+        <!-- Header Bar -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>NIT MANIPUR NAVIGATOR</h1>
+                    <span class="sub-title">Smart Campus Shortest Path Finder &bull; Dijkstra Engine</span>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <button id="btn-toggle-algo" class="btn btn-secondary btn-sm" title="View Dijkstra Execution Matrix">
+                    <i class="fa-solid fa-code-branch"></i>
+                    <span>Dijkstra Visualizer</span>
+                </button>
+                <button id="btn-recenter" class="btn btn-icon" title="Recenter to NIT Manipur Campus">
+                    <i class="fa-solid fa-crosshairs"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area (Sidebar + Map) -->
+        <main class="main-content">
+            
+            <!-- Floating Navigation Sidebar Drawer -->
+            <aside id="sidebar" class="sidebar">
+                <div class="sidebar-handle" id="sidebar-handle">
+                    <div class="handle-bar"></div>
+                </div>
+
+                <!-- Navigation Controls Form -->
+                <div class="card control-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-route text-accent"></i> Plan Your Route</h2>
+                        <span class="badge badge-tech">Dijkstra v1.0</span>
+                    </div>
+
+                    <!-- Geolocation / Off-Campus Alert Banner -->
+                    <div id="geo-status-banner" class="status-banner status-info">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span id="geo-status-text">Detecting your location...</span>
+                    </div>
+
+                    <form id="nav-form" onsubmit="return false;">
+                        
+                        <!-- Start Location Inputs -->
+                        <div class="form-group">
+                            <label for="start-location-select">
+                                <i class="fa-solid fa-circle-dot text-start"></i> Start Location
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="start-location-select" class="form-control">
+                                    <option value="CURRENT_LOCATION" selected>📍 My Current Location (GPS)</option>
+                                    <optgroup label="Or Select Campus Location:" id="start-location-options">
+                                        <!-- Dynamically Populated -->
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="gps-sub-info" id="gps-info">
+                                <span class="dot-pulse"></span>
+                                <span id="gps-coords-text">Requesting browser location...</span>
+                            </div>
+                        </div>
+
+                        <!-- Swap Locations Button -->
+                        <div class="swap-row">
+                            <button type="button" id="btn-swap-nodes" class="btn-swap" title="Swap Start & Destination">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </button>
+                        </div>
+
+                        <!-- Destination Location Inputs -->
+                        <div class="form-group">
+                            <label for="dest-location-select">
+                                <i class="fa-solid fa-location-dot text-dest"></i> Destination
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="dest-location-select" class="form-control">
+                                    <option value="" disabled selected>-- Select Campus Destination --</option>
+                                    <!-- Dynamically Populated -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Quick Choice Badges -->
+                        <div class="quick-destinations">
+                            <span class="quick-label">Quick Pick:</span>
+                            <div class="chips-container" id="quick-chips">
+                                <button type="button" class="chip" data-node="central_library"><i class="fa-solid fa-book"></i> Library</button>
+                                <button type="button" class="chip" data-node="cse_dept"><i class="fa-solid fa-laptop-code"></i> CSE</button>
+                                <button type="button" class="chip" data-node="canteen"><i class="fa-solid fa-utensils"></i> Canteen</button>
+                                <button type="button" class="chip" data-node="admin_block"><i class="fa-solid fa-building"></i> Admin</button>
+                                <button type="button" class="chip" data-node="main_gate"><i class="fa-solid fa-door-open"></i> Gate</button>
+                            </div>
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="form-actions">
+                            <button type="submit" id="btn-find-route" class="btn btn-primary btn-block">
+                                <i class="fa-solid fa-paper-plane"></i> FIND SHORTEST ROUTE
+                            </button>
+                            <button type="button" id="btn-clear-route" class="btn btn-outline btn-block" style="display: none;">
+                                <i class="fa-solid fa-xmark"></i> Clear Route
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- Route Result Card (Initially Hidden) -->
+                <div id="route-result-card" class="card result-card" style="display: none;">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-flag-checkered text-success"></i> Shortest Route Found</h3>
+                        <span id="route-calc-time" class="badge badge-success">Dijkstra Optimized</span>
+                    </div>
+
+                    <!-- Distance and Time Summary -->
+                    <div class="metrics-grid">
+                        <div class="metric-box">
+                            <i class="fa-solid fa-ruler-horizontal metric-icon"></i>
+                            <div class="metric-val" id="res-distance">--</div>
+                            <div class="metric-lbl">Total Distance</div>
+                        </div>
+                        <div class="metric-box">
+                            <i class="fa-solid fa-person-walking metric-icon"></i>
+                            <div class="metric-val" id="res-time">--</div>
+                            <div class="metric-lbl">Est. Walking Time</div>
+                        </div>
+                    </div>
+
+                    <!-- Nearest Node Snap Info (if GPS was used) -->
+                    <div id="snap-info-box" class="snap-info-box" style="display:none;">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>Snapped GPS to nearest node: <strong id="snap-node-name">--</strong></span>
+                    </div>
+
+                    <!-- Turn-by-turn Waypoints -->
+                    <div class="waypoints-section">
+                        <h4 class="waypoints-title"><i class="fa-solid fa-shoe-prints"></i> Turn-by-Turn Path:</h4>
+                        <ol id="waypoints-list" class="waypoints-list">
+                            <!-- Populated dynamically -->
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Dijkstra Algorithm Insights Card (Collapsible) -->
+                <div id="algo-panel" class="card algo-card" style="display: none;">
+                    <div class="card-header">
+                        <h3><i class="fa-solid fa-microchip text-accent"></i> Dijkstra Algorithm Trace</h3>
+                        <button id="btn-close-algo" class="btn-close">&times;</button>
+                    </div>
+                    <p class="algo-desc">
+                        Below is the live execution breakdown calculated using Dijkstra's greedy shortest-path graph traversal.
+                    </p>
+                    <div class="algo-stats-grid">
+                        <div class="algo-stat">
+                            <span class="stat-num" id="stat-visited-count">0</span>
+                            <span class="stat-lbl">Nodes Evaluated</span>
+                        </div>
+                        <div class="algo-stat">
+                            <span class="stat-num" id="stat-path-length">0</span>
+                            <span class="stat-lbl">Nodes in Path</span>
+                        </div>
+                        <div class="algo-stat">
+                            <span class="stat-num" id="stat-complexity">O((V+E)logV)</span>
+                            <span class="stat-lbl">Time Complexity</span>
+                        </div>
+                    </div>
+
+                    <div class="algo-steps-wrapper">
+                        <h4>Execution Step Sequence:</h4>
+                        <div id="algo-steps-log" class="algo-steps-log">
+                            <!-- Dynamic log of Dijkstra steps -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Credit -->
+                <footer class="sidebar-footer">
+                    <p>NIT Manipur Department of Computer Science & Engineering</p>
+                    <p class="tech-note"><i class="fa-solid fa-code"></i> Pure JS Dijkstra &bull; OpenStreetMap &bull; Leaflet</p>
+                </footer>
+
+            </aside>
+
+            <!-- Leaflet Interactive Map View -->
+            <div id="map-container" class="map-container">
+                <div id="map"></div>
+                
+                <!-- Floating Map Quick Controls -->
+                <div class="map-overlay-controls">
+                    <button id="btn-toggle-satellite" class="map-btn active" title="Toggle Satellite / Street View">
+                        <i class="fa-solid fa-satellite"></i> Satellite
+                    </button>
+                    <button id="btn-map-reset" class="map-btn" title="Reset View to Full Campus">
+                        <i class="fa-solid fa-expand"></i> Campus View
+                    </button>
+                    <button id="btn-toggle-all-markers" class="map-btn active" title="Toggle Campus Building Badges">
+                        <i class="fa-solid fa-location-dot"></i> Buildings
+                    </button>
+                    <button id="btn-toggle-paths" class="map-btn" title="Toggle Walkway Graph Edges">
+                        <i class="fa-solid fa-diagram-project"></i> Walking Graph
+                    </button>
+                </div>
+
+                <!-- Map Legend -->
+                <div class="map-legend">
+                    <div class="legend-item"><span class="legend-color color-start"></span> Current / Start</div>
+                    <div class="legend-item"><span class="legend-color color-dest"></span> Destination</div>
+                    <div class="legend-item"><span class="legend-color color-route"></span> Shortest Route</div>
+                    <div class="legend-item"><span class="legend-color color-node"></span> Campus Building</div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Leaflet JS Library -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Application Scripts -->
+    <script src="js/campusData.js"></script>
+    <script src="js/dijkstra.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
