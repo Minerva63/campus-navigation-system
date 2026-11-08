@@ -42,7 +42,7 @@ const campusNodes = {
         category: "Gates & Entrances",
         lat: 24.833236158984715,
         lng: 93.91406698289151,
-        description: "Primary entrance gate to NIT Manipur campus on Thangmeiband Langol Road.",
+        description: "Primary entrance gate to NIT Manipur campus with 24/7 security.",
         icon: "fa-door-open",
         color: "#3b82f6",
         isSelectable: true
@@ -54,9 +54,9 @@ const campusNodes = {
         category: "Administrative",
         lat: 24.832943444832342,
         lng: 93.91417640087442,
-        description: "Directorate, Dean Offices, Academic & General Administration.",
+        description: "Directorate, Dean Offices, Academic & General Administration, Account Section.",
         icon: "fa-building-columns",
-        color: "#8b5cf6",
+        color: "#f65c97",
         isSelectable: true
     },
 
@@ -67,7 +67,7 @@ const campusNodes = {
         lat: 24.832731955340428,
         lng: 93.91360788865191,
         description: "Central Library housing books, digital resources & reading halls.",
-        icon: "fa-book-bookmark",
+        icon: "fa-book-open",
         color: "#06b6d4",
         isSelectable: true
     },
@@ -79,8 +79,8 @@ const campusNodes = {
         lat: 24.831743,
         lng: 93.912335,
         description: "Computer Science & Engineering Department & High-Performance Computing Labs.",
-        icon: "fa-laptop-code",
-        color: "#3b82f6",
+        icon: "fa-graduation-cap",
+        color: "#a855f7",
         isSelectable: true
     },
 
@@ -91,8 +91,8 @@ const campusNodes = {
         lat: 24.831586,
         lng: 93.912851,
         description: "Electronics & Communication Engineering Department.",
-        icon: "fa-microchip",
-        color: "#10b981",
+        icon: "fa-graduation-cap",
+        color: "#a855f7",
         isSelectable: true
     },
 
@@ -103,8 +103,8 @@ const campusNodes = {
         lat: 24.831904,
         lng: 93.913379,
         description: "Electrical Engineering Department & Power Systems Labs.",
-        icon: "fa-bolt",
-        color: "#f97316",
+        icon: "fa-graduation-cap",
+        color: "#a855f7",
         isSelectable: true
     },
 
@@ -115,8 +115,8 @@ const campusNodes = {
         lat: 24.832460,
         lng: 93.912974,
         description: "Mechanical Engineering Department & Thermodynamics / Robotics Labs.",
-        icon: "fa-gears",
-        color: "#64748b",
+        icon: "fa-graduation-cap",
+        color: "#a855f7",
         isSelectable: true
     },
 
@@ -124,11 +124,59 @@ const campusNodes = {
         id: "civil_dept",
         name: "Civil Engineering Department",
         category: "Departments",
-        lat: 24.832478,
-        lng: 93.913710,
+        lat: 24.83257780551877,
+        lng: 93.91372836690779,
         description: "Civil Engineering Department & Structural Design Labs.",
-        icon: "fa-compass-drafting",
+        icon: "fa-graduation-cap",
         color: "#a855f7",
+        isSelectable: true
+    },
+
+    "math_dept": {
+        id: "math_dept",
+        name: "Mathematics Department",
+        category: "Departments",
+        lat: 24.832377466436835,
+        lng: 93.91341582992422,
+        description: "Mathematics Faculties Offices.",
+        icon: "fa-graduation-cap",
+        color: "#a855f7",
+        isSelectable: true
+    },
+
+    "chem_dept": {
+        id: "chem_dept",
+        name: "Chemistry Department",
+        category: "Departments",
+        lat: 24.832471613973265,
+        lng: 93.91384858653731,
+        description: "Chemistry laboratory, Chemistry faculties Offices.",
+        icon: "fa-graduation-cap",
+        color: "#a855f7",
+        isSelectable: true
+    },
+
+    "ece_lab": {
+        id: "ece_lab",
+        name: "ECE LAB 1",
+        category: "Labs",
+        lat: 24.832332991222174,
+        lng: 93.91333764179836,
+        description: "Electronics & Communication Laboratory 1.",
+        icon: "fa-flask",
+        color: "#10B981",
+        isSelectable: true
+    },
+
+    "ee_lab": {
+        id: "ee_lab",
+        name: "EE LAB 1",
+        category: "Labs",
+        lat: 24.83221779755039,
+        lng: 93.91313864226846,
+        description: "Electrical Laboratory 1.",
+        icon: "fa-flask",
+        color: "#10B981",
         isSelectable: true
     },
 
@@ -162,7 +210,7 @@ const campusNodes = {
         category: "Facilities",
         lat: 24.832621127362657,
         lng: 93.91385824711766,
-        description: "Campus cafeteria, food stalls & refreshment area.",
+        description: "Campus cafeteria, Printing, Xerox.",
         icon: "fa-utensils",
         color: "#eab308",
         isSelectable: true
@@ -174,7 +222,7 @@ const campusNodes = {
         category: "Hostels",
         lat: 24.832412,
         lng: 93.914429,
-        description: "Senior Boys Residential Hostel Block.",
+        description: "Boys Residential Hostel Block 1.",
         icon: "fa-bed",
         color: "#3b82f6",
         isSelectable: true
@@ -186,7 +234,7 @@ const campusNodes = {
         category: "Hostels",
         lat: 24.831100,
         lng: 93.911176,
-        description: "Junior Boys Residential Hostel Block.",
+        description: "Boys Residential Hostel Block 2.",
         icon: "fa-hotel",
         color: "#2563eb",
         isSelectable: true
@@ -225,6 +273,66 @@ const campusNodes = {
         description: "Campus medical unit & emergency medical aid.",
         icon: "fa-notes-medical",
         color: "#ef4444",
+        isSelectable: true
+    },
+
+    "LH_18": {
+        id: "LH_18",
+        name: "LH-18",
+        category: "Lecture Halls",
+        lat:24.832181769590196,
+        lng:93.9136470338649,
+        description: "Lecture hall 18",
+        icon: "fa-chalkboard-user",
+        color: "#F59E0B",
+        isSelectable: true
+    },
+
+    "LH_19": {
+        id: "LH_19",
+        name: "LH-19",
+        category: "Lecture Halls",
+        lat:24.832094137762134,
+        lng:93.91349683016747,
+        description: "Lecture hall 19",
+        icon: "fa-chalkboard-user",
+        color: "#F59E0B",
+        isSelectable: true
+    },
+
+    "LH_17": {
+        id: "LH_17",
+        name: "LH-17",
+        category: "Lecture Halls",
+        lat:24.831537695324297,
+        lng:93.91250076804586,
+        description: "Lecture hall 17",
+        icon: "fa-chalkboard-user",
+        color: "#F59E0B",
+        isSelectable: true
+    },
+
+    "LH_16": {
+        id: "LH_16",
+        name: "LH-16",
+        category: "Lecture Halls",
+        lat:24.831617562247658,
+        lng:93.91243692262368,
+        description: "Lecture hall 16",
+        icon: "fa-chalkboard-user",
+        color: "#F59E0B",
+        isSelectable: true
+    },
+
+    "LH_15": {
+        id: "LH_15",
+        name: "LH-15",
+        category: "Lecture Halls",
+        lat:24.831705259202185,
+        lng:93.91236444944174,
+        description: "Lecture hall 15",
+        icon: "fa-chalkboard-user",
+        color: "#F59E0B",
         isSelectable: true
     },
 
