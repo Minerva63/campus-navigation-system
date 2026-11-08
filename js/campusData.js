@@ -62,7 +62,7 @@ const campusNodes = {
 
     "central_library": {
         id: "central_library",
-        name: "Central Library",
+        name: "Library",
         category: "Academic",
         lat: 24.832826,
         lng: 93.913458,
@@ -134,7 +134,7 @@ const campusNodes = {
 
     "workshop": {
         id: "workshop",
-        name: "Central Workshop",
+        name: "Workshop",
         category: "Academic",
         lat: 24.832101,
         lng: 93.912864,
@@ -146,7 +146,7 @@ const campusNodes = {
 
     "auditorium": {
         id: "auditorium",
-        name: "Auditorium / Open Air Theatre (OAT)",
+        name: "Auditorium",
         category: "Facilities",
         lat: 24.831574,
         lng: 93.911741,
@@ -158,7 +158,7 @@ const campusNodes = {
 
     "canteen": {
         id: "canteen",
-        name: "Central Canteen",
+        name: "Canteen",
         category: "Facilities",
         lat: 24.832618,
         lng: 93.913833,
@@ -206,7 +206,7 @@ const campusNodes = {
 
     "sports_complex": {
         id: "sports_complex",
-        name: "Sports Complex",
+        name: "NIT Ground",
         category: "Facilities",
         lat: 24.833575,
         lng: 93.915305,
@@ -236,32 +236,21 @@ const campusNodes = {
         id: "p_gate",
         name: "Main Entrance Road Node",
         category: "Walkway Node",
-        lat: 24.83120,
-        lng: 93.91280,
+        lat: 24.833253740337025, 
+        lng: 93.91411926574261,
         description: "Walkway node at campus entrance gate.",
         icon: "fa-circle-dot",
         color: "#64748b",
         isSelectable: false
     },
 
-    "p_avenue_1": {
-        id: "p_avenue_1",
-        name: "Entrance Avenue Node 1",
-        category: "Walkway Node",
-        lat: 24.83150,
-        lng: 93.91250,
-        description: "Main entrance avenue walkway.",
-        icon: "fa-circle-dot",
-        color: "#64748b",
-        isSelectable: false
-    },
-
+    
     "p_admin_jct": {
         id: "p_admin_jct",
         name: "Admin & Library Walkway Junction",
         category: "Walkway Node",
-        lat: 24.83200,
-        lng: 93.91220,
+        lat: 24.833239504891367,
+        lng: 93.9139802595141,
         description: "Intersection between Admin Block, Library, and Auditorium walkway.",
         icon: "fa-circle-dot",
         color: "#64748b",
@@ -296,8 +285,8 @@ const campusNodes = {
         id: "p_workshop_jct",
         name: "Workshop Road Junction",
         category: "Walkway Node",
-        lat: 24.83360,
-        lng: 93.91260,
+        lat: 24.83211006526585,
+        lng: 93.91298624706346,
         description: "Road junction near Civil Dept and Workshop.",
         icon: "fa-circle-dot",
         color: "#64748b",
@@ -308,25 +297,38 @@ const campusNodes = {
         id: "p_hostel_jct",
         name: "Hostel Road Junction",
         category: "Walkway Node",
-        lat: 24.83390,
-        lng: 93.91280,
+        lat: 24.832414877305336,
+        lng: 93.91473930759474,
         description: "Junction leading to Boys Hostels.",
         icon: "fa-circle-dot",
         color: "#64748b",
         isSelectable: false
     },
 
+   
     "p_west_path": {
-        id: "p_west_path",
-        name: "West Campus Pathway Node",
-        category: "Walkway Node",
-        lat: 24.83230,
-        lng: 93.91150,
-        description: "West pathway connecting Sports Ground and Girls Hostel.",
-        icon: "fa-circle-dot",
-        color: "#64748b",
-        isSelectable: false
-    }
+    id: "p_west_path",
+    name: "West Campus Pathway Node",
+    category: "Walkway Node",
+    lat: 24.834182096403406,
+    lng: 93.91514375514986,
+    description: "West pathway connecting Sports Ground and Girls Hostel.",
+    icon: "fa-circle-dot",
+    color: "#64748b",
+    isSelectable: false
+},
+
+"p_girls_road_1": {
+    id: "p_girls_road_1",
+    name: "Girls Hostel Road Junction 1",
+    category: "Walkway Node",
+    lat: 24.835503208782995,
+    lng: 93.91549259497602,
+    description: "Walking path junction towards Girls Hostel.",
+    icon: "fa-circle-dot",
+    color: "#64748b",
+    isSelectable: false
+}
 };
 
 /**
@@ -339,10 +341,10 @@ const campusGraph = {
     // -------------------------------------------------------------------------
     // Main Walkway Road Network (Inter-junction connections)
     // -------------------------------------------------------------------------
-    "p_gate": {
-        "main_gate": 0,
-        "p_avenue_1": 45
-    },
+    // "p_gate": {
+    //     "main_gate": 0,
+    //     "p_avenue_1": 45
+    // },
 
     "p_avenue_1": {
         "p_gate": 45,
@@ -350,14 +352,28 @@ const campusGraph = {
         "health_centre": 25
     },
 
-    "p_admin_jct": {
-        "p_avenue_1": 60,
-        "p_academic_jct": 70,
-        "p_west_path": 80,
-        "admin_block": 25,
-        "central_library": 45,
-        "auditorium": 40
-    },
+    // "p_admin_jct": {
+    //     "p_avenue_1": 60,
+    //     "p_academic_jct": 70,
+    //     "p_west_path": 80,
+    //     "admin_block": 25,
+    //     "central_library": 45,
+    //     "auditorium": 40
+    // },
+
+    "p_gate": {
+    "main_gate": 0,
+    "p_admin_jct": 15
+},
+
+"p_admin_jct": {
+    "p_gate": 15,
+    "p_academic_jct": 70,
+    "p_west_path": 80,
+    "admin_block": 25,
+    "central_library": 45,
+    "auditorium": 40
+},
 
     "p_academic_jct": {
         "p_admin_jct": 70,
@@ -393,12 +409,17 @@ const campusGraph = {
     },
 
     "p_west_path": {
-        "p_admin_jct": 80,
-        "p_academic_jct": 75,
-        "p_hostel_jct": 180,
-        "sports_complex": 60,
-        "hostel_girls": 45
-    },
+    "p_admin_jct": 80,
+    "p_academic_jct": 75,
+    "p_hostel_jct": 180,
+    "sports_complex": 60,
+    "p_girls_road_1": 151
+},
+
+"p_girls_road_1": {
+    "p_west_path": 151,
+    "hostel_girls": 25
+},
 
     // -------------------------------------------------------------------------
     // Building Spur Connections to Walkway Network
@@ -420,9 +441,12 @@ const campusGraph = {
         "p_admin_jct": 40
     },
 
+    // "health_centre": {
+    //     "p_avenue_1": 25
+    // },
     "health_centre": {
-        "p_avenue_1": 25
-    },
+    "p_admin_jct": 25
+},
 
     "canteen": {
         "p_academic_jct": 35
@@ -462,13 +486,15 @@ const campusGraph = {
         "p_hostel_jct": 45
     },
 
-    "hostel_girls": {
-        "p_west_path": 45
-    },
+   "hostel_girls": {
+    "p_girls_road_1": 25
+},
 
     "sports_complex": {
         "p_west_path": 60
     }
+
+    
 };
 
 /**

@@ -77,6 +77,21 @@ document.addEventListener('DOMContentLoaded', () => {
             zoom: CAMPUS_CONFIG.defaultZoom,
             zoomControl: true
         });
+        // TEMPORARY TOOL: Capture walking path coordinates
+let capturedRoadPoints = [];
+
+map.on('click', function (e) {
+    const point = {
+        id: `p_trace_${capturedRoadPoints.length + 1}`,
+        lat: Number(e.latlng.lat.toFixed(6)),
+        lng: Number(e.latlng.lng.toFixed(6))
+    };
+
+    capturedRoadPoints.push(point);
+
+    console.log("Captured road point:", point);
+    console.table(capturedRoadPoints);
+});
 
         // High-resolution Esri Satellite Imagery Layer
         satelliteLayer = L.tileLayer(
@@ -110,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render Campus Building Markers on Map
         renderCampusMarkers();
-        renderGraphEdges();
+        //renderGraphEdges();
     }
 
     // -------------------------------------------------------------------------
@@ -338,10 +353,20 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // currentCalculatedRoute = result;
+
+        // // Display results on map & sidebar
+        // drawRouteOnMap(result.path, isUsingGps);
         currentCalculatedRoute = result;
 
-        // Display results on map & sidebar
-        drawRouteOnMap(result.path, isUsingGps);
+console.log("Selected Dijkstra path:", result.path);
+
+result.path.forEach(id => {
+    console.log(id, campusNodes[id]?.lat, campusNodes[id]?.lng);
+});
+
+// Display results on map & sidebar
+drawRouteOnMap(result.path, isUsingGps);
         displayRouteMetrics(result, isUsingGps);
         displayDijkstraTrace(result);
 
@@ -354,6 +379,8 @@ document.addEventListener('DOMContentLoaded', () => {
             resultCard.scrollIntoView({ behavior: 'smooth' });
         }
     }
+
+    
 
     function drawRouteOnMap(pathNodeIds, isUsingGps) {
         // Clear previous polylines
@@ -554,14 +581,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // btnTogglePaths.addEventListener('click', () => {
+        //     const active = btnTogglePaths.classList.toggle('active');
+        //     if (active) {
+        //         map.addLayer(graphEdgesGroup);
+        //     } else {
+        //         map.removeLayer(graphEdgesGroup);
+        //     }
+        // });
+
         btnTogglePaths.addEventListener('click', () => {
-            const active = btnTogglePaths.classList.toggle('active');
-            if (active) {
-                map.addLayer(graphEdgesGroup);
-            } else {
-                map.removeLayer(graphEdgesGroup);
-            }
-        });
+    map.removeLayer(graphEdgesGroup);
+    btnTogglePaths.classList.remove('active');
+});
 
         // Algo Visualizer Toggle
         btnToggleAlgo.addEventListener('click', () => {
