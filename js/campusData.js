@@ -52,8 +52,8 @@ const campusNodes = {
         id: "admin_block",
         name: "Administrative Block",
         category: "Administrative",
-        lat: 24.832994,
-        lng: 93.914171,
+        lat: 24.832943444832342,
+        lng: 93.91417640087442,
         description: "Directorate, Dean Offices, Academic & General Administration.",
         icon: "fa-building-columns",
         color: "#8b5cf6",
@@ -228,107 +228,8 @@ const campusNodes = {
         isSelectable: true
     },
 
-    // =========================================================================
-    // 2. WALKWAY & ROAD NETWORK PATH NODES (NON-SELECTABLE JUNCTIONS)
-    // =========================================================================
 
-    "p_gate": {
-        id: "p_gate",
-        name: "Main Entrance Road Node",
-        category: "Walkway Node",
-        lat: 24.833253740337025, 
-        lng: 93.91411926574261,
-        description: "Walkway node at campus entrance gate.",
-        icon: "fa-circle-dot",
-        color: "#64748b",
-        isSelectable: false
-    },
-
-    
-    "p_admin_jct": {
-        id: "p_admin_jct",
-        name: "Admin & Library Walkway Junction",
-        category: "Walkway Node",
-        lat: 24.833239504891367,
-        lng: 93.9139802595141,
-        description: "Intersection between Admin Block, Library, and Auditorium walkway.",
-        icon: "fa-circle-dot",
-        color: "#64748b",
-        isSelectable: false
-    },
-
-    "p_academic_jct": {
-        id: "p_academic_jct",
-        name: "Academic Quad Junction",
-        category: "Walkway Node",
-        lat: 24.83260,
-        lng: 93.91220,
-        description: "Central Academic Quadrangle intersection.",
-        icon: "fa-circle-dot",
-        color: "#64748b",
-        isSelectable: false
-    },
-
-    "p_dept_jct": {
-        id: "p_dept_jct",
-        name: "Department Spine Corridor Node",
-        category: "Walkway Node",
-        lat: 24.83300,
-        lng: 93.91230,
-        description: "Main department corridor walkway.",
-        icon: "fa-circle-dot",
-        color: "#64748b",
-        isSelectable: false
-    },
-
-    "p_workshop_jct": {
-        id: "p_workshop_jct",
-        name: "Workshop Road Junction",
-        category: "Walkway Node",
-        lat: 24.83211006526585,
-        lng: 93.91298624706346,
-        description: "Road junction near Civil Dept and Workshop.",
-        icon: "fa-circle-dot",
-        color: "#64748b",
-        isSelectable: false
-    },
-
-    "p_hostel_jct": {
-        id: "p_hostel_jct",
-        name: "Hostel Road Junction",
-        category: "Walkway Node",
-        lat: 24.832414877305336,
-        lng: 93.91473930759474,
-        description: "Junction leading to Boys Hostels.",
-        icon: "fa-circle-dot",
-        color: "#64748b",
-        isSelectable: false
-    },
-
-   
-    "p_west_path": {
-    id: "p_west_path",
-    name: "West Campus Pathway Node",
-    category: "Walkway Node",
-    lat: 24.834182096403406,
-    lng: 93.91514375514986,
-    description: "West pathway connecting Sports Ground and Girls Hostel.",
-    icon: "fa-circle-dot",
-    color: "#64748b",
-    isSelectable: false
-},
-
-"p_girls_road_1": {
-    id: "p_girls_road_1",
-    name: "Girls Hostel Road Junction 1",
-    category: "Walkway Node",
-    lat: 24.835503208782995,
-    lng: 93.91549259497602,
-    description: "Walking path junction towards Girls Hostel.",
-    icon: "fa-circle-dot",
-    color: "#64748b",
-    isSelectable: false
-},
+// ADDED JUNCTIONS
 
 "p_junction_1": {
     id: "p_junction_1",
@@ -399,86 +300,8 @@ const campusNodes = {
  * Edge weights are actual ground walking distances in meters.
  */
 const campusGraph = {
-    // -------------------------------------------------------------------------
-    // Main Walkway Road Network (Inter-junction connections)
-    // -------------------------------------------------------------------------
-    // "p_gate": {
-    //     "main_gate": 0,
-    //     "p_avenue_1": 45
-    // },
-
-    "p_avenue_1": {
-        "p_gate": 45,
-        "p_admin_jct": 60,
-        "health_centre": 25
-    },
-
-    // "p_admin_jct": {
-    //     "p_avenue_1": 60,
-    //     "p_academic_jct": 70,
-    //     "p_west_path": 80,
-    //     "admin_block": 25,
-    //     "central_library": 45,
-    //     "auditorium": 40
-    // },
-
-    "p_gate": {
-    "main_gate": 0,
-},
-
-"p_admin_jct": {
-    "p_academic_jct": 70,
-    "p_west_path": 80,
-    "admin_block": 25,
-    "auditorium": 40
-},
-
-    "p_academic_jct": {
-        "p_admin_jct": 70,
-        "p_dept_jct": 45,
-        "p_west_path": 75,
-        "central_library": 40,
-        "canteen": 35,
-        "cse_dept": 35
-    },
-
-    "p_dept_jct": {
-        "p_academic_jct": 45,
-        "p_workshop_jct": 70,
-        "cse_dept": 20,
-        "ece_dept": 15,
-        "ee_dept": 35,
-        "mech_dept": 35
-    },
-
-    "p_workshop_jct": {
-        "p_dept_jct": 70,
-        "p_hostel_jct": 40,
-        "mech_dept": 35,
-        "civil_dept": 35,
-        "workshop": 25
-    },
-
-    "p_hostel_jct": {
-        "p_workshop_jct": 40,
-        "p_west_path": 180,
-        "hostel_boys_1": 15,
-        "hostel_boys_2": 45
-    },
-
-    "p_west_path": {
-    "p_admin_jct": 80,
-    "p_academic_jct": 75,
-    "p_hostel_jct": 180,
-    "sports_complex": 60,
-    "p_girls_road_1": 151
-},
-
-"p_girls_road_1": {
-    "p_west_path": 151,
-    "hostel_girls": 25
-},
-
+ 
+ 
     // -------------------------------------------------------------------------
     // Building Spur Connections to Walkway Network
     // -------------------------------------------------------------------------
@@ -489,7 +312,7 @@ const campusGraph = {
     },
 
     "admin_block": {
-        "p_admin_jct": 25
+        "p_junction_2": 0
     },
 
     "central_library": {
@@ -497,62 +320,10 @@ const campusGraph = {
         "p_junction_5": 11
     },
 
-    "auditorium": {
-        "p_admin_jct": 40
-    },
-
-    // "health_centre": {
-    //     "p_avenue_1": 25
-    // },
+    // ADDED JUNCTIONS
     "health_centre": {
-    "p_admin_jct": 25
+    "p_junction_4": 11
 },
-
-    "canteen": {
-        "p_academic_jct": 35
-    },
-
-    "cse_dept": {
-        "p_academic_jct": 35,
-        "p_dept_jct": 20
-    },
-
-    "ece_dept": {
-        "p_dept_jct": 15
-    },
-
-    "ee_dept": {
-        "p_dept_jct": 35
-    },
-
-    "mech_dept": {
-        "p_dept_jct": 35,
-        "p_workshop_jct": 35
-    },
-
-    "civil_dept": {
-        "p_workshop_jct": 35
-    },
-
-    "workshop": {
-        "p_workshop_jct": 25
-    },
-
-    "hostel_boys_1": {
-        "p_hostel_jct": 15
-    },
-
-    "hostel_boys_2": {
-        "p_hostel_jct": 45
-    },
-
-   "hostel_girls": {
-    "p_girls_road_1": 25
-},
-
-    "sports_complex": {
-        "p_west_path": 60
-    },
 
     "p_junction_1": {
         "main_gate": 47,

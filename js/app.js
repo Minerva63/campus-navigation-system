@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // DOM Element References
     const startSelect = document.getElementById('start-location-select');
-    const startOptionsGroup = document.getElementById('start-location-options');
     const destSelect = document.getElementById('dest-location-select');
     const form = document.getElementById('nav-form');
     const btnFindRoute = document.getElementById('btn-find-route');
@@ -67,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
         initMap();
         populateLocationSelects();
         setupEventListeners();
-        requestUserLocation();
     }
 
     function initMap() {
@@ -232,7 +230,9 @@ map.on('click', function (e) {
             optionsHtml += `</optgroup>`;
         }
 
-        startOptionsGroup.innerHTML = optionsHtml;
+        startSelect.innerHTML = '<option value="" disabled selected>-- Select a campus starting point --</option>' +
+            '<option value="CURRENT_LOCATION">📍 Use my current location (GPS)</option>' +
+            optionsHtml;
         destSelect.innerHTML = '<option value="" disabled selected>-- Select Campus Destination --</option>' + optionsHtml;
     }
 
@@ -240,12 +240,15 @@ map.on('click', function (e) {
     // 4. BROWSER GEOLOCATION API INTEGRATION
     // -------------------------------------------------------------------------
     function requestUserLocation() {
+        nearestNodeFromGps = null;
+
         if (!navigator.geolocation) {
-            updateGeoStatus('warning', 'Browser does not support Geolocation. Using campus start selection.');
-            fallbackGpsToMainGate();
+            gpsCoordsText.textContent = 'Browser location is unavailable.';
+            updateGeoStatus('warning', 'This browser does not support location. Select a campus starting point instead.');
             return;
         }
 
+        gpsCoordsText.textContent = 'Waiting for browser location permission...';
         updateGeoStatus('info', 'Requesting browser GPS location access...');
 
         navigator.geolocation.getCurrentPosition(
@@ -270,12 +273,14 @@ map.on('click', function (e) {
                 }
             },
             (error) => {
-                let errMsg = 'Location access denied or unavailable.';
+                let errMsg = 'Could not get your location. Please try again or select a campus starting point.';
                 if (error.code === error.PERMISSION_DENIED) {
-                    errMsg = 'Permission denied. Please select a starting campus location.';
+                    errMsg = 'Location permission was denied. Allow it in your browser site settings, or select a campus starting point.';
+                } else if (error.code === error.TIMEOUT) {
+                    errMsg = 'Location request timed out. Please try again or select a campus starting point.';
                 }
+                gpsCoordsText.textContent = 'Current location unavailable.';
                 updateGeoStatus('warning', `⚠️ ${errMsg}`);
-                fallbackGpsToMainGate();
             },
             {
                 enableHighAccuracy: true,
@@ -301,16 +306,6 @@ map.on('click', function (e) {
         userGpsMarker.bindPopup(`<b>Your Current Position</b><br>Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`);
     }
 
-    function fallbackGpsToMainGate() {
-        gpsCoordsText.textContent = "Using preset campus location";
-        // Default snap to Main Gate if GPS fails
-        nearestNodeFromGps = {
-            nodeId: "main_gate",
-            node: campusNodes["main_gate"],
-            distanceMeters: 0
-        };
-    }
-
     function updateGeoStatus(type, htmlMessage) {
         geoBanner.className = `status-banner status-${type}`;
         geoText.innerHTML = htmlMessage;
@@ -324,6 +319,11 @@ map.on('click', function (e) {
         const destNodeId = destSelect.value;
 
         // Validation
+        if (!startNodeId) {
+            alert('Please select a starting campus location or choose current location (GPS).');
+            return;
+        }
+
         if (!destNodeId) {
             alert('Please select a destination campus location.');
             return;
@@ -506,6 +506,12 @@ drawRouteOnMap(result.path, isUsingGps);
     // 6. EVENT LISTENERS
     // -------------------------------------------------------------------------
     function setupEventListeners() {
+        startSelect.addEventListener('change', () => {
+            if (startSelect.value === 'CURRENT_LOCATION') {
+                requestUserLocation();
+            }
+        });
+
         // Form Submit
         btnFindRoute.addEventListener('click', triggerRouteCalculation);
         form.addEventListener('submit', (e) => {
@@ -522,6 +528,11 @@ drawRouteOnMap(result.path, isUsingGps);
                 alert('Cannot swap when Start is set to live GPS. Please select a specific start building first.');
                 return;
             }
+            if (!startSelect.value || !destSelect.value) {
+                alert('Please select both a starting point and destination before swapping.');
+                return;
+            }
+
             const temp = startSelect.value;
             startSelect.value = destSelect.value;
             destSelect.value = temp;

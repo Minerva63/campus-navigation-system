@@ -9,12 +9,18 @@ A web application developed for **NIT Manipur** to help students, faculty, and v
 ## 🌟 Project Highlights
 
 - 🛰️ **High-Resolution Satellite Map View**: Uses Esri World Imagery satellite layer with transportation/road label overlays. Includes a 1-click **Satellite / Streets** toggle button on the map overlay.
-- 📍 **Browser Geolocation Integration**: Requests browser position (`navigator.geolocation`) and snaps to the nearest campus node. If off-campus or permission is denied, gracefully allows manual campus start selection.
+- 📍 **Browser Geolocation Integration**: GPS is optional and requested only when the current-location start option is selected. Choose any listed campus location instead; if GPS is denied or unavailable, the app asks you to choose a campus start rather than assuming Main Gate.
 - 🗺️ **Interactive Leaflet Map**: Powered by Leaflet.js and OpenStreetMap (no paid API key required). Shows building markers, walking graph edges, and glowing shortest path polylines.
 - 🧠 **Pure JavaScript Dijkstra Engine**: Handcrafted, explainable Dijkstra shortest-path calculation (no black-box routing API).
 - 📊 **Dijkstra Step Trace & Visualizer**: Interactive presentation tab displaying algorithm execution steps, evaluated nodes count, and updated distance matrices—ideal for college project presentations!
 - ⏱️ **Distance & Walking Time Estimation**: Calculates total path length in meters/kilometers and estimates walking time based on average walking speeds (~1.2 m/s).
 - 📱 **Modern & Responsive UI**: Built with HTML5, CSS3 glassmorphism design, FontAwesome icons, and Google Fonts (`Outfit`). Optimized for mobile phones, tablets, and laptops.
+
+---
+
+## 🧭 Selecting a Route
+
+Choose any listed campus landmark in **Start Location** and any listed landmark in **Destination**, then select **Find Shortest Route**. GPS is optional; the browser asks for location permission only after you select **Use my current location (GPS)**. If permission is denied or GPS is unavailable, select a campus landmark as the start instead.
 
 ---
 

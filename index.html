@@ -66,7 +66,7 @@
                     <!-- Geolocation / Off-Campus Alert Banner -->
                     <div id="geo-status-banner" class="status-banner status-info">
                         <i class="fa-solid fa-location-dot"></i>
-                        <span id="geo-status-text">Detecting your location...</span>
+                        <span id="geo-status-text">Choose current location to request GPS, or select a campus starting point.</span>
                     </div>
 
                     <form id="nav-form" onsubmit="return false;">
@@ -78,15 +78,12 @@
                             </label>
                             <div class="select-wrapper">
                                 <select id="start-location-select" class="form-control">
-                                    <option value="CURRENT_LOCATION" selected>📍 My Current Location (GPS)</option>
-                                    <optgroup label="Or Select Campus Location:" id="start-location-options">
-                                        <!-- Dynamically Populated -->
-                                    </optgroup>
+                                    <option value="" disabled selected>-- Select a campus starting point --</option>
+                                    <option value="CURRENT_LOCATION">📍 Use my current location (GPS)</option>
                                 </select>
                             </div>
                             <div class="gps-sub-info" id="gps-info">
-                                <span class="dot-pulse"></span>
-                                <span id="gps-coords-text">Requesting browser location...</span>
+                                <span id="gps-coords-text">GPS is requested only when you select current location.</span>
                             </div>
                         </div>
 
@@ -104,7 +101,7 @@
                             </label>
                             <div class="select-wrapper">
                                 <select id="dest-location-select" class="form-control">
-                                    <option value="" disabled selected>-- Select Campus Destination --</option>
+                                    <option value="" disabled selected>-- Select a campus destination --</option>
                                     <!-- Dynamically Populated -->
                                 </select>
                             </div>
