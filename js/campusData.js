@@ -40,8 +40,8 @@ const campusNodes = {
         id: "main_gate",
         name: "Main Gate",
         category: "Gates & Entrances",
-        lat: 24.833314,
-        lng: 93.914058,
+        lat: 24.833236158984715,
+        lng: 93.91406698289151,
         description: "Primary entrance gate to NIT Manipur campus on Thangmeiband Langol Road.",
         icon: "fa-door-open",
         color: "#3b82f6",
@@ -64,8 +64,8 @@ const campusNodes = {
         id: "central_library",
         name: "Library",
         category: "Academic",
-        lat: 24.832826,
-        lng: 93.913458,
+        lat: 24.832731955340428,
+        lng: 93.91360788865191,
         description: "Central Library housing books, digital resources & reading halls.",
         icon: "fa-book-bookmark",
         color: "#06b6d4",
@@ -160,8 +160,8 @@ const campusNodes = {
         id: "canteen",
         name: "Canteen",
         category: "Facilities",
-        lat: 24.832618,
-        lng: 93.913833,
+        lat: 24.832621127362657,
+        lng: 93.91385824711766,
         description: "Campus cafeteria, food stalls & refreshment area.",
         icon: "fa-utensils",
         color: "#eab308",
@@ -328,7 +328,68 @@ const campusNodes = {
     icon: "fa-circle-dot",
     color: "#64748b",
     isSelectable: false
+},
+
+"p_junction_1": {
+    id: "p_junction_1",
+    name: "Path junction 1",
+    category: "Walkway Node",
+    lat: 24.833018287739243,
+    lng: 93.91366456081899,
+    description: "Walking path junction towards library or rightmost road.",
+    icon: "fa-circle-dot",
+    color: "#64748b",
+    isSelectable: false
+},
+
+"p_junction_3": {
+    id: "p_junction_3",
+    name: "path junction 3",
+    category: "Walkway Node",
+    lat: 24.832753779918956,
+    lng: 93.91384965168919,
+    description: "Walking path junction towards library or canteen.",
+    icon: "fa-circle-dot",
+    color: "#64748b",
+    isSelectable: false
+},
+
+"p_junction_5": {
+    id: "p_junction_5",
+    name: "path junction 5",
+    category: "Walkway Node",
+    lat: 24.832651943690177,
+    lng: 93.91367080674796,
+    description: "infront of library",
+    icon: "fa-circle-dot",
+    color: "#64748b",
+    isSelectable: false
+},
+
+"p_junction_2": {
+    id: "p_junction_2",
+    name: "path junction 2",
+    category: "Walkway Node",
+    lat: 24.83299294170042,
+    lng: 93.91426042170863,
+    description: "infront of admin",
+    icon: "fa-circle-dot",
+    color: "#64748b",
+    isSelectable: false
+},
+
+"p_junction_4": {
+    id: "p_junction_4",
+    name: "path junction 4",
+    category: "Walkway Node",
+    lat: 24.832901974468193,
+    lng: 93.91345411651032,
+    description: "infront of healthcenter",
+    icon: "fa-circle-dot",
+    color: "#64748b",
+    isSelectable: false
 }
+
 };
 
 /**
@@ -363,15 +424,12 @@ const campusGraph = {
 
     "p_gate": {
     "main_gate": 0,
-    "p_admin_jct": 15
 },
 
 "p_admin_jct": {
-    "p_gate": 15,
     "p_academic_jct": 70,
     "p_west_path": 80,
     "admin_block": 25,
-    "central_library": 45,
     "auditorium": 40
 },
 
@@ -425,7 +483,9 @@ const campusGraph = {
     // Building Spur Connections to Walkway Network
     // -------------------------------------------------------------------------
     "main_gate": {
-        "p_gate": 0
+        "p_gate": 0,
+        "p_junction_1": 47,
+        "p_junction_2": 33
     },
 
     "admin_block": {
@@ -433,8 +493,8 @@ const campusGraph = {
     },
 
     "central_library": {
-        "p_admin_jct": 45,
-        "p_academic_jct": 40
+        "p_academic_jct": 40,
+        "p_junction_5": 11
     },
 
     "auditorium": {
@@ -492,9 +552,34 @@ const campusGraph = {
 
     "sports_complex": {
         "p_west_path": 60
+    },
+
+    "p_junction_1": {
+        "main_gate": 47,
+        "p_junction_3": 35,
+        "p_junction_4": 24
+    },
+
+    "p_junction_3": {
+        "p_junction_1": 35,
+        "p_junction_5": 21
+    },
+
+    "p_junction_5": {
+        "p_junction_3": 21,
+        "central_library": 11
+    },
+    
+    "p_junction_2": {
+        "main_gate": 33,
+        "admin_block": 0
+    },
+
+    "p_junction_4": {
+        "health_centre": 11,
+        "p_junction_1": 24
     }
 
-    
 };
 
 /**
